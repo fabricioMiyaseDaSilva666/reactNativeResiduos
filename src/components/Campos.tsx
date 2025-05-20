@@ -1,4 +1,4 @@
-import { View, TextInput, StyleSheet, TextInputProps } from 'react-native'
+import { View, TextInput, StyleSheet, TextInputProps, Button } from 'react-native'
 
 export function Campo({...rest}:TextInputProps){
     return (

@@ -2,17 +2,17 @@ import { View, ImageProps, Image, StyleSheet } from "react-native";
 
 export function Imagem({...rest}:ImageProps){
     return (
-        <View>
-            <Image></Image>
+        <View style={styles.img}>
+            <Image {...rest}/>
         </View>
     );
 }
 
 const styles = StyleSheet.create({
     img: {
-        width: 500,
-        height: 200,
-        borderWidth: 2,
+        width: "50%",
+        height: "50%",
+        alignItems: "center",
     },
 }
 );

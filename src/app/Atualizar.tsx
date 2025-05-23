@@ -1,11 +1,12 @@
 import { View, TextInput, StyleSheet, Button, Alert, Platform, Text, GestureResponderEvent, TouchableOpacity } from 'react-native'
 import { Campo } from '@/components/Campos'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useResiduoDataBase, ResiduoDataBase } from '@/database/useResiduoDataBase'
 import { useNavigation } from 'expo-router'
+import { useRoute } from '@react-navigation/native'
 import { Picker } from '@react-native-picker/picker';
 
-export default function Registra(){
+export default function Atualizar(){
 
     type CustomButtonProps = {
         title: string;
@@ -20,7 +21,7 @@ export default function Registra(){
     React.FC<CustomButtonProps> = ({
       title,
       onPress,
-      backgroundColor = '#F78B1F',
+      backgroundColor = '#084B8C',
       textColor = '#fff', 
     }) => {
         return (
@@ -37,7 +38,7 @@ export default function Registra(){
     React.FC<CustomButtonProps> = ({
       title,
       onPress,
-      backgroundColor = '#084B8C',
+      backgroundColor = '#F78B1F',
       textColor = '#fff',  
     }) => {
         return (
@@ -54,26 +55,60 @@ export default function Registra(){
     const [datinRes, setDatinRes] = useState("")
     const [categoria, setCategoria] = useState("")
     const [peso, setPeso] = useState("")
-    const [residuo, setResiduo] = useState<ResiduoDataBase[]>()
+    const [busca, setBusca] =useState("")
+    const [residuos, setResiduos] = useState<ResiduoDataBase[]>()
     const residuoDataBase = useResiduoDataBase()
     const navigation = useNavigation()
+    const route = useRoute();
+    const { item } = route.params;
 
+    useEffect(() => {
+        if(item){
+            setId(item.id.toString());
+            setDatinRes(item.datinRes);
+            setCategoria(item.categoria);
+            setPeso(item.peso);
+        }
+    }, []);
 
-    
-
-    async function create(){
+    async function atualizar(){
         try{
-            const response = await residuoDataBase.create({
+            await residuoDataBase.atualizar({
+                id: Number(id),
                 datinRes,
                 categoria,
                 peso
-            })
+            });
 
-            Alert.alert("Registrado com sucesso! ID: " + response.insertedRowId)
+            Alert.alert(
+                "Sucesso!",
+                "Dados dos resíduos atualizados com sucesso!",
+                [
+                    {
+                        text: "Ok",
+                        onPress: () => navigation.navigate("Consultar"),
+                    },
+                ],
+                { cancelable: false }
+            );
         }catch(error){
             console.log(error)
         }
-    }//Fim do create
+    }
+
+    async function salvarAtualizacao(){
+        try{
+            if(id){
+                await atualizar()
+            }
+        }catch(error){
+            console.log(error)
+        }
+        setId("");
+        setDatinRes("");
+        setCategoria("");
+        setPeso("");
+    }
 
     return (
         <View style={styles.container}>
@@ -107,8 +142,8 @@ export default function Registra(){
                 </View>
                 
             </View>
-            <CustomButton2 title="Salvar Registro" onPress={create}/>
-            <CustomButton title="Voltar" onPress={() => navigation.navigate('Index')}/>
+            <CustomButton title="Atualizar" onPress={salvarAtualizacao}/>
+            <CustomButton2 title="Voltar" onPress={() => navigation.navigate('Index')}/>
         </View>
     );
 }
@@ -127,30 +162,30 @@ const styles = StyleSheet.create({
             padding: 10,
             backgroundColor: '#084B8C',
         },
+        textinho:{
+            color: "#fff",
+            fontSize: 20,
+            marginLeft: 15
+        },
+        botao:{
+            marginTop: 15,
+            borderRadius: 15
+        },
         text:{
             fontSize: 30,
             margin: 15,
             marginLeft: 90,
             marginRight: 90
         },
-        text2:{
-            fontSize: 30,
-            margin: 15,
-            marginLeft: 30,
-            marginRight: 30
-        },
         botao2:{
             marginTop: 15,
             borderRadius: 15
         },
-        botao:{
-            marginTop: 15,
-            borderRadius: 15
+        text2:{
+            fontSize: 30,
+            margin: 15,
+            marginLeft: 110,
+            marginRight: 110
         },
-        textinho:{
-            color: "#fff",
-            fontSize: 20,
-            marginLeft: 15
-        }
     }
 )

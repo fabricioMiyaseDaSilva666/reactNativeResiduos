@@ -4,7 +4,7 @@ import { MaterialIcons } from "@expo/vector-icons"
 type Props = PressableProps & {
     data:{
         id: string
-        datinRes: date
+        datinRes: string
         categoria: string
         peso: string
     }
@@ -25,8 +25,8 @@ export function Residuos({ data, onDelete, onEditar, ...rest}:Props){
                     <MaterialIcons name="edit" size={24} color="#3232aa"/>
                 </TouchableOpacity>
 
-                <TouchableOpacity>
-                    <MaterialIcons name="delete" size={24} color="red"/>
+                <TouchableOpacity onPress={onDelete}>
+                <MaterialIcons name="delete" size={24} color="red"/>
                 </TouchableOpacity>
             </Pressable>
         </View>

@@ -71,9 +71,10 @@ export default function Cadastrar(){
 
     return (
         <View style={styles.container}>
-            <Campo placeholder="Pesquisar" onChangeText={setBusca}/>
+            
 
             <View style={styles.flat}>
+            <Campo style={styles.pesquisa} placeholder="Pesquisar" onChangeText={setBusca}/>
                 <FlatList
                     data={residuos}
                     keyExtractor={(item) => String(item.id)}
@@ -111,6 +112,14 @@ const styles = StyleSheet.create({
         botao:{
             marginTop: 15,
             borderRadius: 15
+        },
+        pesquisa:{
+            width: 300,
+            fontSize: 20,
+            borderRadius: 20,
+            backgroundColor: "#fff",
+            margin: 10,
+            marginLeft: 35
         }
     }
 )

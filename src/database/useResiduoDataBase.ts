@@ -2,7 +2,7 @@ import { useSQLiteContext } from 'expo-sqlite';
 
 export type ResiduoDataBase = {
     id: number
-    datinRes: date
+    datinRes: string
     categoria: string
     peso: string
 }//Criar o local de varuáveis do Banco

@@ -54,7 +54,7 @@ export default function Index(){
 
     return (
         <View style={styles.container}>
-            <Imagem source={senaclogo}/>
+            <Imagem style={styles.senac} source={senaclogo}/>
             <CustomButton title="Registrar novo residuo" onPress={() => navigation.navigate('Registra')}/>
             <CustomButton2 title="Ver Registros" onPress={() => navigation.navigate('Consultar')}/>
         </View>
@@ -88,5 +88,6 @@ const styles = StyleSheet.create({
     icon:{
         marginRight: 8,
     },
+    
 }
 );

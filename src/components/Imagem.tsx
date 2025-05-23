@@ -10,7 +10,7 @@ export function Imagem({...rest}:ImageProps){
 
 const styles = StyleSheet.create({
     img: {
-        width: "50%",
+        width: "100%",
         height: "50%",
         alignItems: "center",
     },
